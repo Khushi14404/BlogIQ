@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  font-family: "Urbanist", sans-serif;
+}
+@import "tailwindcss";
+/* Tailwind CSS */
+
+/* to remove scrollbar */
+::-weblit-scrollbar {
+  display: none;
+}
+
+@theme {
+  --color-primary: #5044e5;
+}
