@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { assets, dashboard_data } from "../../assets/assets";
+import { assets } from "../../assets/assets";
 import BlogTableItem from "../../components/admin/BlogTableItem";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
-  const [dashboarData, setDashboardData] = useState({
+  const [dashboardData, setDashboardData] = useState({
     blogs: 0,
     comments: 0,
     drafts: 0,
     recentBlogs: [],
   });
 
+  const { axios } = useAppContext();
+
   const fetchDashboard = async () => {
-    setDashboardData(dashboard_data);
+    try {
+      const { data } = await axios.get("/api/admin/dashboard");
+      data.success
+        ? setDashboardData(data.dashboardData)
+        : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -24,21 +35,21 @@ const Dashboard = () => {
         <div className="flex items-center gap-4 bg-white p-4 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_1} alt="dashboard_icon" />
           <div className="text-xl font-semibold text-gray-600">
-            <p>{dashboard_data.blogs}</p>
+            <p>{dashboardData.blogs}</p>
             <p className="text-gray-400 font-light">Blogs</p>
           </div>
         </div>
         <div className="flex items-center gap-4 bg-white p-4 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_2} alt="dashboard_icon" />
           <div className="text-xl font-semibold text-gray-600">
-            <p>{dashboard_data.comments}</p>
+            <p>{dashboardData.comments}</p>
             <p className="text-gray-400 font-light">Comments</p>
           </div>
         </div>
         <div className="flex items-center gap-4 bg-white p-4 rounded shadow cursor-pointer hover:scale-105 transition-all">
           <img src={assets.dashboard_icon_3} alt="dashboard_icon" />
           <div className="text-xl font-semibold text-gray-600">
-            <p>{dashboard_data.drafts}</p>
+            <p>{dashboardData.drafts}</p>
             <p className="text-gray-400 font-light">Drafts</p>
           </div>
         </div>
@@ -55,38 +66,31 @@ const Dashboard = () => {
             <thead className="text-xs text-gray-600 text-left uppercase">
               <tr>
                 <th scope="col" className="px-2 py-4 xl:px-6">
-                  {" "}
-                  #{" "}
+                  #
                 </th>
                 <th scope="col" className="px-2 py-4">
-                  {" "}
-                  Blog Title{" "}
+                  Blog Title
                 </th>
                 <th scope="col" className="px-2 py-4 max-sm:hidden">
-                  {" "}
-                  Date{" "}
+                  Date
                 </th>
-                <th scope="col" className="px-2 py-4  max-sm:hidden">
-                  {" "}
-                  Status{" "}
+                <th scope="col" className="px-2 py-4 max-sm:hidden">
+                  Status
                 </th>
                 <th scope="col" className="px-2 py-4">
-                  {" "}
-                  Actions{" "}
+                  Actions
                 </th>
               </tr>
             </thead>
             <tbody>
-              {dashboarData.recentBlogs.map((blog, index) => {
-                return (
-                  <BlogTableItem
-                    key={blog._id}
-                    blog={blog}
-                    fetchBlogs={fetchDashboard}
-                    index={index + 1}
-                  />
-                );
-              })}
+              {dashboardData.recentBlogs.map((blog, index) => (
+                <BlogTableItem
+                  key={blog._id}
+                  blog={blog}
+                  fetchBlogs={fetchDashboard}
+                  index={index + 1}
+                />
+              ))}
             </tbody>
           </table>
         </div>

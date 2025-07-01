@@ -42,7 +42,7 @@ export const getDashboard = async (req, res) => {
   try {
     const recentBlogs = await Blog.find({}).sort({ createdAt: -1 }).limit(5);
     const blogs = await Blog.countDocuments();
-    const comments = await Comment.countDocuments({ isApproved: true });
+    const comments = await Comment.countDocuments();
     const drafts = await Blog.countDocuments({ isPublished: false });
 
     const dashboardData = {
@@ -75,7 +75,17 @@ export const deleteCommentById = async (req, res) => {
 export const approveCommentById = async (req, res) => {
   try {
     const { id } = req.body;
-    const Comment = await Comment.findByIdAndDelete(id, { isApproved: true });
+    // Corrected: Use findByIdAndUpdate to set isApproved to true
+    const updatedComment = await Comment.findByIdAndUpdate(
+      id,
+      { $set: { isApproved: true } },
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedComment) {
+      return res.json({ success: false, message: "Comment not found" });
+    }
+
     res.json({ success: true, message: "Comment approved successfully" });
   } catch (error) {
     res.json({ success: false, message: error.message });

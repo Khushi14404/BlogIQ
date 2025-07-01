@@ -8,9 +8,9 @@ const Footer = () => {
         <div>
           <img src={assets.logo} alt="logo" className="w-32 sm:w-44" />
           <p className="mt-6 max-w-[410px]">
-            Quickblog is a modern platform swhere ideas come to life. Whether
+            BlogIQ is a modern platform swhere ideas come to life. Whether
             you're a passionate writer, a curious reader, or someone with a
-            story to tell, Quickblog gives you the tools to express yourself and
+            story to tell, BlogIQ gives you the tools to express yourself and
             connect with a like-minded community.
           </p>
         </div>
