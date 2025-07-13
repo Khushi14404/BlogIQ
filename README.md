@@ -4,7 +4,7 @@
 
 It blends a seamless frontend experience with powerful backend functionality, all enhanced with **Gemini AI** for intelligent blog summaries. Built using the **MERN stack** and deployed on **Vercel**, BlogiQ is designed to be clean, scalable, and user-friendly.
 
-> 🔗 **Live Demo:**[BlogIQ](https://blog-iq.vercel.app/)
+> 🔗 **Live Demo:**[BlogIQ](https://blog-7dtxajlni-khushis-projects-12a2e800.vercel.app/)
 
 ---
 
